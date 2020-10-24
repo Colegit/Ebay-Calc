@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"> 
+    <title>Ebay Net Calculator</title>
+  </head>
+  <body class="text-center">
+    
+  <div class="container-fluid">
+    <br>
+    <h1 class="text-primary text-center">Ebay Net Calculator</h1>
+    <br>
+
+    <form class="checkboxes">
+    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+    <label for="vehicle1" class="col-sm-12 col-lg-4"> Shipping Outside of Canada</label>
+    <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
+    <label for="vehicle2" class="col-sm-12 col-lg-4"> Sending profits to someone else via Paypal</label><br>
+    <br>
+    <br>
+
+  <div class="row justify-content-center">
+    <div class="col-md-4 col-xs-4" >
+
+      <!-- TODO add class form control to a div so its not copy/pasted in every field -->
+      <!-- TODO format html especially the div tags to look less shitily -->
+     
+
+      <label for="SellPrice">Selling Price</label><br>
+      <input type="number" id="SellPrice" class="form-control " name="sellprice" step="any" required><br>
+ 
+      <label for="CostProduct">Cost of Product</label><br>
+      <input type="number" id="CostProduct" class="form-control" name="costproduct" step="any"><br>
+
+      <label for="ebayfee">Ebay Fee</label><br>
+      <input type="number" id="ebayfee" class="form-control" name="ebayfee" placeholder="10%" step="any" readonly><br>
+
+      <label for="InkCost">Ink Cost</label><br>
+      <input type="number" id="InkCost" class="form-control" name="inkcost" step="any"><br>
+
+      <label for="PaperCost">Paper Cost</label><br>
+      <input type="number" id="PaperCost" class="form-control" name="papercost" step="any"><br>
+
+      <label for="PackingCost">Packing Materials Cost</label><br>
+      <input type="number" id="PackingCost" class="form-control" name="packingcost" step="any"><br>
+
+      <label for="Shipping">Shipping </label><br>
+      <input type="number" id="Shipping" class="form-control" name="shipping" step="any"><br>
+
+      <label for="Paypal">Paypal Fee</label><br>
+      <input type="number" id="Paypal" class="form-control" name="paypal" placeholder="2% + .30cents"  step="any" readonly><br>
+      <br>
+      <br>
+      <input type="submit" id="Submit" type="button" class="btn btn-primary" name="submit"><br>  
+      
+      </div>
+
+    </div>
+  
+    <br>
+    <br>
+    <div class="row justify-content-center">
+    <div class="col-md-4 col-xs-4" >
+    <label for="Net">Net Profit</label>
+    <input type="text" id="Net" name="net" class="form-control shadow-sm p-3 mb-5 bg-white rounded" readonly>
+    </div>
+
+    <div class="col-md-4 col-xs-4" >
+    <label for="Margin">Net Margin</label>
+    <input type="text" id="Margin" name="margin" class="form-control shadow-sm p-3 mb-5 bg-white rounded" readonly>
+  </div>
+    
+  </div>
+  <br>
+  <br>
+    </form>
+
+  </div> 
+  
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.3/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.3/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+    -->
+
+    <script>
+
+      $("form").on("submit", function(e){
+
+
+        e.preventDefault();
+
+
+
+        // Cost Field variables
+        let SellingPrice = $("#SellPrice").val();
+        let CostOfProduct = $("#CostProduct").val();
+       // let EbayFee = $("#ebayfee").val();
+        let CostofInk = $("#InkCost").val();
+        let CostofPaper = $("#PaperCost").val();
+        let PackMaterials = $("#PackingCost").val();
+        let ShipCost = $("#Shipping").val();       
+        let PalFee = $("#Paypal").val();
+
+        // Unchangable fee calculations
+        EbayPercent = SellingPrice * .10
+        console.log(EbayPercent)
+
+        PaypalPercent = (SellingPrice * .02) + .30
+        console.log(PaypalPercent)
+        
+        //Push all subtractions to an array for one big sum subtraction for our net. 
+        let moneygone = [];
+
+        moneygone.push(
+        CostOfProduct, 
+        EbayPercent, 
+        CostofInk, 
+        CostofPaper, 
+        PackMaterials, 
+        ShipCost, 
+        PaypalPercent
+        );
+
+      // Converted array to int. In JS, this still looks like magic to me 
+       moneygone = moneygone.map((i) => Number(i));
+       console.log(moneygone)
+
+        // Add all array values together 
+        let totalgone = 0;
+        for (var i in moneygone) {
+          totalgone = totalgone + moneygone[i]
+        }
+
+        console.log(totalgone)
+
+
+        let NetProfit = parseFloat(SellingPrice) - parseFloat(totalgone)
+        $("#Net").val("$" + NetProfit.toFixed(2));
+
+        let MrMargin = ((NetProfit / SellingPrice) *100).toFixed(2)
+        $("#Margin").val(MrMargin + "%")
+
+
+        // Change color of final output depending if its good news or not
+        if (MrMargin < 0) {
+          $("#Margin").css('color', 'red')
+        }
+        else {
+          $("#Margin").css('color', 'green')
+        }
+
+        if(NetProfit < 0) {
+          $("#Net").css('color', 'red')
+        }
+        else {
+          $("#Net").css('color', 'green')
+        }
+
+
+      });
+
+    </script>
+  </body>
+</html>

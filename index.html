@@ -16,9 +16,6 @@
     <h1 class="text-primary text-center"><b>Ebay Net Calculator</b></h1>
     <br>
 
-    <!-- Default unchecked -->
-
-
 
     <form class="checkboxes">
       <div class="custom-control custom-checkbox">
@@ -28,7 +25,6 @@
 
       <br>
       
-      <!-- Default unchecked -->
       <div class="custom-control custom-checkbox">
         <input type="checkbox" class="custom-control-input" id="PaypalSend">
         <label class="custom-control-label" for="PaypalSend">Sending profits to someone else via Paypal</label>
@@ -38,9 +34,6 @@
 
   <div class="row justify-content-center ">
     <div class="col-md-4 col-xs-4" >
-
-      <!-- TODO add class form control to a div so its not copy/pasted in every field -->
-      <!-- TODO format html especially the div tags to look less shitily -->
      
 
       <label for="SellPrice">Selling Price</label><br>
@@ -161,8 +154,7 @@
         if (PalCheck == true) {
           PaypalPercent = (SellingPrice * .04) + .30
         }
-
-        
+  
         //Push all subtractions to an array for one big sum subtraction for our net. 
         let moneygone = [];
 
@@ -176,7 +168,7 @@
         PaypalPercent
         );
 
-      // Converted array to int. In JS, this still looks like magic to me 
+      // Converted array elements to numbers
        moneygone = moneygone.map((i) => Number(i));
        console.log(moneygone)
 
@@ -185,7 +177,6 @@
         for (var i in moneygone) {
           totalgone = totalgone + moneygone[i]
         }
-
 
         // Update unchangeable fee form boxes to the amount subtracted
          $("#ebayfee").val(EbayPercent.toFixed(2))

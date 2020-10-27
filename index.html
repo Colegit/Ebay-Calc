@@ -13,18 +13,30 @@
     
   <div class="container-fluid">
     <br>
-    <h1 class="text-primary text-center">Ebay Net Calculator</h1>
+    <h1 class="text-primary text-center"><b>Ebay Net Calculator</b></h1>
     <br>
+
+    <!-- Default unchecked -->
+
+
 
     <form class="checkboxes">
-    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-    <label for="vehicle1" class="col-sm-12 col-lg-4"> Shipping Outside of Canada</label>
-    <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-    <label for="vehicle2" class="col-sm-12 col-lg-4"> Sending profits to someone else via Paypal</label><br>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" id="ShippingCan" class="custom-control-input">
+        <label class="custom-control-label" for="ShippingCan">Shipping Outside of Canada</label>
+      </div>
+
+      <br>
+      
+      <!-- Default unchecked -->
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="PaypalSend">
+        <label class="custom-control-label" for="PaypalSend">Sending profits to someone else via Paypal</label>
+      </div>
     <br>
     <br>
 
-  <div class="row justify-content-center">
+  <div class="row justify-content-center ">
     <div class="col-md-4 col-xs-4" >
 
       <!-- TODO add class form control to a div so its not copy/pasted in every field -->
@@ -56,7 +68,7 @@
       <input type="number" id="Paypal" class="form-control" name="paypal" placeholder="2% + .30cents"  step="any" readonly><br>
       <br>
       <br>
-      <input type="submit" id="Submit" type="button" class="btn btn-primary" name="submit"><br>  
+      <input type="submit" id="Submit" type="button" class="btn btn-primary" name="submit" value="Calculate"><br>  
       
       </div>
 
@@ -81,33 +93,56 @@
     </form>
 
   </div> 
-  
-
-    <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.3/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
-    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.3/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
-    -->
+    <script> 
 
-    <script>
+      // Dynamically change the placeholder values if checkboxes are clicked
+      $("#ShippingCan").on("change", function (c){
+        c.preventDefault();
 
+        if ($("#ShippingCan, #PayPalSend").prop('checked') == true ) {
+          $("#ebayfee").attr("placeholder", "15%")
+
+        }
+        else {
+          $("#ebayfee").attr("placeholder", "10%")
+        }
+      });
+
+
+      $("#PaypalSend").on("change", function (d){ 
+        d.preventDefault();
+
+        if ($("#PaypalSend").prop('checked') == true) {
+        console.log("working")
+
+        $("#Paypal").attr("placeholder", "4% + .30cents")
+        }
+        else {
+        $("#Paypal").attr("placeholder", "2% + .30cents")
+        }
+      });
+
+
+
+
+      // Calculate button pushed
       $("form").on("submit", function(e){
 
 
         e.preventDefault();
 
-
+        //Checkbox variables
+        let ShipCheck = $("#ShippingCan").prop('checked')
+        let PalCheck = $("#PaypalSend").prop('checked')
 
         // Cost Field variables
         let SellingPrice = $("#SellPrice").val();
         let CostOfProduct = $("#CostProduct").val();
-       // let EbayFee = $("#ebayfee").val();
         let CostofInk = $("#InkCost").val();
         let CostofPaper = $("#PaperCost").val();
         let PackMaterials = $("#PackingCost").val();
@@ -117,9 +152,16 @@
         // Unchangable fee calculations
         EbayPercent = SellingPrice * .10
         console.log(EbayPercent)
+        if (ShipCheck == true) {
+          EbayPercent = SellingPrice * .15
+        }
 
         PaypalPercent = (SellingPrice * .02) + .30
         console.log(PaypalPercent)
+        if (PalCheck == true) {
+          PaypalPercent = (SellingPrice * .04) + .30
+        }
+
         
         //Push all subtractions to an array for one big sum subtraction for our net. 
         let moneygone = [];
@@ -144,11 +186,14 @@
           totalgone = totalgone + moneygone[i]
         }
 
-        console.log(totalgone)
+
+        // Update unchangeable fee form boxes to the amount subtracted
+         $("#ebayfee").val(EbayPercent.toFixed(2))
+         $("#Paypal").val(PaypalPercent.toFixed(2))
 
 
         let NetProfit = parseFloat(SellingPrice) - parseFloat(totalgone)
-        $("#Net").val("$" + NetProfit.toFixed(2));
+        $("#Net").val("$ " + NetProfit.toFixed(2));
 
         let MrMargin = ((NetProfit / SellingPrice) *100).toFixed(2)
         $("#Margin").val(MrMargin + "%")
